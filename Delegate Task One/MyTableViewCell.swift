@@ -8,14 +8,14 @@
 import UIKit
 
 protocol MyTableViewCellDelegate {
-    func showWhatRowIsPicked(_ numberOfRow: Int, _ switchState: Bool)
+    func showWhatRowIsPicked(cell: UITableViewCell)
+    func showSwitchState(_ switchState: Bool)
     
-    var row: Int? { get set }
 }
 
 class MyTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var switchState: UISwitch!
+    @IBOutlet weak var mySwitch: UISwitch!
     
     var delegate: MyTableViewCellDelegate?
     
@@ -28,6 +28,7 @@ class MyTableViewCell: UITableViewCell {
     }
 
     @IBAction func cellButtonPressed(_ sender: UIButton) {
-        delegate?.showWhatRowIsPicked(delegate?.row ?? 0, switchState.isOn)
+        delegate?.showWhatRowIsPicked(cell: self)
+        delegate?.showSwitchState(mySwitch.isOn)
     }
 }

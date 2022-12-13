@@ -10,16 +10,13 @@ import UIKit
 
 
 class ViewController: UIViewController {
- 
+    
     @IBOutlet weak var delegateTestTableView: UITableView!
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         delegateTestTableView.dataSource = self
     }
-    
-    
 }
 
 //MARK: - UITableViewDataSource
@@ -27,18 +24,15 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
         return 10
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "testTableViewCell", for: indexPath) as? MyTableViewCell {
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "testTableViewCell", for:
+                                                        indexPath) as? MyTableViewCell {
             cell.delegate = self
             return cell
         }
-        
         return UITableViewCell()
     }
     
@@ -47,19 +41,21 @@ extension ViewController: UITableViewDataSource {
 //MARK: - MyTableViewCellDelegate
 
 extension ViewController: MyTableViewCellDelegate {
-
-    var row: Int? {
-        get {
-            (delegateTestTableView.indexPathForSelectedRow?.row ?? 0) + 1
-        }
-        set {
-            0
+    func showWhatRowIsPicked(cell: UITableViewCell) {
+        let numberOfcell = delegateTestTableView.indexPath(for: cell)
+        print("Нажата ячейка под номером - \(String(describing: numberOfcell))")
+    }
+    
+    
+    func showSwitchState(_ switchState: Bool) {
+        switch switchState {
+        case true:
+            print("Свитч включен")
+        case false:
+            print("Свитч выключен")
         }
     }
     
-
-    func showWhatRowIsPicked(_ numberOfRow: Int, _ switchState: Bool) {
-        print("Нажата ячейка под номером - \(numberOfRow), switch - \(switchState)")
-    }
+    
 }
 
